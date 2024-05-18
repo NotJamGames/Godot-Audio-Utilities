@@ -115,6 +115,14 @@ func verify_paths() -> bool:
 				% [bus_effect_index, bus_name])
 		return false
 
+	if !AudioServer.get_bus_effect(bus_index, bus_effect_index).has_method\
+			(bus_effect_setter):
+		push_error("Error: setter method %s not present in bus %s effect %s" \
+		% [bus_effect_setter, bus_index, bus_effect_index])
+		return false
+
+	set_waveform(waveform)
+
 	return true
 
 
