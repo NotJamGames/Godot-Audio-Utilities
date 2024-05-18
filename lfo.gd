@@ -32,7 +32,7 @@ func set_waveform(new_waveform : Waveforms) -> void:
 
 
 func set_rate(new_rate : float) -> void:
-	if new_rate <=. 0:
+	if new_rate <= 0:
 		push_error("Rate must be greater than zero") 
 		return
 
