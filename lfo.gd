@@ -28,7 +28,7 @@ var curr_wave_func : Callable
 
 ## The rate of the LFO, in HZ. [br][br]
 ## Must be greater than 0.
-@export var rate : float = 60.0 : set = set_rate
+@export var rate : float = 1.0 : set = set_rate
 @onready var cycle_duration : float = 1.0 / rate
 var time : float = .0
 
