@@ -23,10 +23,11 @@ enum Waveforms {SAW, SQUARE, TRIANGLE, SINE}
 @export var waveform : Waveforms = Waveforms.SAW : set = set_waveform
 var wave_funcs : Array[Callable] = \
 		[calculate_saw, calculate_square, calculate_triangle, calculate_sine] 
-var curr_wave_func : Callable
+@onready var curr_wave_func : Callable = wave_funcs[waveform]
 
 
-## The rate of the LFO, in HZ. [br][br]
+## The rate of the LFO, in HZ.
+## [br][br]
 ## Must be greater than 0.
 @export var rate : float = 1.0 : set = set_rate
 @onready var cycle_duration : float = 1.0 / rate
@@ -112,8 +113,6 @@ func verify_paths() -> bool:
 				% [bus_effect_index, bus_name])
 		return false
 
-	
-
 	return true
 
 
@@ -140,7 +139,7 @@ func calculate_square() -> float:
 
 
 func calculate_triangle() -> float:
-	return abs(time - (time / (cycle_duration * .5)))
+	return 2 * abs(fmod(time, cycle_duration) - cycle_duration / 2.0)
 
 
 func calculate_sine() -> float:
