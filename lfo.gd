@@ -65,7 +65,8 @@ var time : float = .0
 
 func _ready() -> void:
 	if Engine.is_editor_hint():
-		set_cycling(false); return
+		set_cycling(false)
+		return
 	if autostart: start()
 
 
@@ -83,6 +84,7 @@ func _process(delta : float) -> void:
 func set_cycling(new_state : bool) -> void:
 	if new_state == false:
 		cycling = new_state
+		return
 
 	if !verify_paths(): return
 
