@@ -18,11 +18,12 @@ var bus_index : int
 
 
 @export_category("LFO Parameters")
-enum Waveforms {SAW, SQUARE, TRIANGLE, SINE}
+enum Waveforms {SAW, INVERTED_SAW, SQUARE, TRIANGLE, SINE}
 ## The waveform used by the LFO
 @export var waveform : Waveforms = Waveforms.SAW : set = set_waveform
 var wave_funcs : Array[Callable] = \
-		[calculate_saw, calculate_square, calculate_triangle, calculate_sine] 
+		[calculate_saw, calculate_inverted_saw, calculate_square, 
+		calculate_triangle, calculate_sine] 
 @onready var curr_wave_func : Callable = wave_funcs[waveform]
 
 
@@ -155,6 +156,10 @@ func set_amplitude(new_amplitude : float) -> void:
 
 func calculate_saw() -> float:
 	return time / cycle_duration
+
+
+func calculate_inverted_saw() -> float:
+	return (cycle_duration - time) / cycle_duration
 
 
 func calculate_square() -> float:
