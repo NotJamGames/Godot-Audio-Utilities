@@ -37,7 +37,11 @@ var time : float = .0
 ## The initial value for the effect parameter.
 ## [br][br]
 ## Please note that the effect of amplitude depends greatly on the particular
-## AudioEffect and parameter, and should be set accordingly. 
+## AudioEffect and parameter, and should be set accordingly.
+## [br][br]
+## Please note that baseline accepts both positive and negative values to
+## ensure compatibility across a range of AudioEffect parameters. Be careful
+## to set this to a value compatible with the specified parameter
 @export var bus_effect_baseline : float
 ## Sets the strength of the LFO: the effect parameter will be modulated by
 ## up to this value, both above and below the baseline value.
@@ -48,7 +52,7 @@ var time : float = .0
 ## [br][br]
 ## Please note that the effect of amplitude depends greatly on the particular
 ## AudioEffect and parameter, and should be set accordingly.
-@export var amplitude : float
+@export var amplitude : float : set = set_amplitude
 
 
 @export_category("Init Parameters")
@@ -139,6 +143,14 @@ func set_rate(new_rate : float) -> void:
 
 	rate = new_rate
 	cycle_duration = 1.0 / rate
+
+
+func set_amplitude(new_amplitude : float) -> void:
+	if new_amplitude < 0:
+		push_error("Amplitude must be greater than or equal to zero") 
+		return
+
+	amplitude = new_amplitude
 
 
 func calculate_saw() -> float:
