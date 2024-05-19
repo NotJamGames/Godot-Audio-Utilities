@@ -34,20 +34,20 @@ var wave_funcs : Array[Callable] = \
 var time : float = .0
 
 
-## The initial value for the effect parameter, to which the amplitude generated
-## by the LFO will be added.
-## [br][br]
-## For instance, if assigned to an AudioEffectFilter, setting a 
-## bus_effect_baseline of 2000.0 and LFO strength of 3000.0 would allow the 
-## LFO to modulate between values of 2000Hz and 5000Hz.
+## The initial value for the effect parameter.
 ## [br][br]
 ## Please note that the effect of amplitude depends greatly on the particular
 ## AudioEffect and parameter, and should be set accordingly. 
 @export var bus_effect_baseline : float
-## Sets the strength of the LFO. [br][br]
+## Sets the strength of the LFO: the effect parameter will be modulated by
+## up to this value, both above and below the baseline value.
+## [br][br]
+## For instance, if assigned to an AudioEffectFilter, setting a 
+## bus_effect_baseline of 5000.0 and LFO strength of 3000.0 would allow the 
+## LFO to modulate between values of 8000Hz and 2000Hz.
+## [br][br]
 ## Please note that the effect of amplitude depends greatly on the particular
-## AudioEffect and parameter, and should be set accordingly. [br][br]
-## Accepts negative values. 
+## AudioEffect and parameter, and should be set accordingly.
 @export var amplitude : float
 
 
@@ -76,7 +76,8 @@ func _process(delta : float) -> void:
 	if time > cycle_duration:
 		time = fmod(time, cycle_duration)
 
-	var new_lfo_amplitude : float = curr_wave_func.call() * amplitude
+	var new_lfo_amplitude : float = \
+			(curr_wave_func.call() - .5) * amplitude * 2.0
 	AudioServer.get_bus_effect(bus_index, bus_effect_index).call\
 			(bus_effect_setter, bus_effect_baseline + new_lfo_amplitude)
 

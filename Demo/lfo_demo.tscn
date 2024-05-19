@@ -20,7 +20,7 @@ script = ExtResource("2_dhuae")
 bus_name = "LowPass"
 bus_effect_setter = "set_cutoff"
 waveform = 1
-bus_effect_baseline = 2000.0
+bus_effect_baseline = 5000.0
 amplitude = 5000.0
 
 [node name="AcceleratingTremoloSaw" type="Node" parent="." node_paths=PackedStringArray("audio_stream_player", "lfo", "parameter_tweener")]
@@ -38,7 +38,7 @@ lfo = NodePath("../LFO")
 script = ExtResource("2_dhuae")
 bus_name = "Gainer"
 bus_effect_setter = "set_volume_db"
-rate = 3.85295
+rate = 3.08742
 bus_effect_baseline = -10.0
 amplitude = -10.0
 
@@ -64,7 +64,7 @@ bus_name = "PitchShift"
 
 [node name="LFO" type="Node" parent="PitchShiftTriangle"]
 script = ExtResource("2_dhuae")
-bus_name = "PitchEffect"
+bus_name = "PitchShift"
 bus_effect_setter = "set_pitch_scale"
 waveform = 2
 bus_effect_baseline = 1.0
@@ -72,4 +72,4 @@ amplitude = 1.0
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("1_xnclm")
-bus = &"Gainer"
+bus = &"PitchShift"
