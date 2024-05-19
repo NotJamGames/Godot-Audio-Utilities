@@ -1,0 +1,75 @@
+[gd_scene load_steps=6 format=3 uid="uid://w721jrym66fv"]
+
+[ext_resource type="Script" path="res://Demo/demo_player.gd" id="1_5q2f4"]
+[ext_resource type="Script" path="res://Demo/demo_manager.gd" id="1_pmh3u"]
+[ext_resource type="AudioStream" uid="uid://cw8w5vao43wta" path="res://Demo/sawtooth.wav" id="1_xnclm"]
+[ext_resource type="Script" path="res://lfo.gd" id="2_dhuae"]
+[ext_resource type="Script" path="res://Demo/lfo_tweener.gd" id="4_w44au"]
+
+[node name="LFODemo" type="Node"]
+script = ExtResource("1_pmh3u")
+
+[node name="LowPassCutoffSquare" type="Node" parent="." node_paths=PackedStringArray("audio_stream_player", "lfo")]
+script = ExtResource("1_5q2f4")
+audio_stream_player = NodePath("../AudioStreamPlayer")
+lfo = NodePath("LFO")
+bus_name = "LowPass"
+
+[node name="LFO" type="Node" parent="LowPassCutoffSquare"]
+script = ExtResource("2_dhuae")
+bus_name = "LowPass"
+bus_effect_setter = "set_cutoff"
+waveform = 1
+bus_effect_baseline = 2000.0
+amplitude = 5000.0
+
+[node name="AcceleratingTremoloSaw" type="Node" parent="." node_paths=PackedStringArray("audio_stream_player", "lfo", "parameter_tweener")]
+script = ExtResource("1_5q2f4")
+audio_stream_player = NodePath("../AudioStreamPlayer")
+lfo = NodePath("LFO")
+bus_name = "Gainer"
+parameter_tweener = NodePath("LFOTweener")
+
+[node name="LFOTweener" type="Node" parent="AcceleratingTremoloSaw" node_paths=PackedStringArray("lfo")]
+script = ExtResource("4_w44au")
+lfo = NodePath("../LFO")
+
+[node name="LFO" type="Node" parent="AcceleratingTremoloSaw"]
+script = ExtResource("2_dhuae")
+bus_name = "Gainer"
+bus_effect_setter = "set_volume_db"
+rate = 3.85295
+bus_effect_baseline = -10.0
+amplitude = -10.0
+
+[node name="PitchShiftSine" type="Node" parent="." node_paths=PackedStringArray("audio_stream_player", "lfo")]
+script = ExtResource("1_5q2f4")
+audio_stream_player = NodePath("../AudioStreamPlayer")
+lfo = NodePath("LFO")
+bus_name = "PitchShift"
+
+[node name="LFO" type="Node" parent="PitchShiftSine"]
+script = ExtResource("2_dhuae")
+bus_name = "PitchShift"
+bus_effect_setter = "set_pitch_scale"
+waveform = 3
+bus_effect_baseline = 1.0
+amplitude = 1.0
+
+[node name="PitchShiftTriangle" type="Node" parent="." node_paths=PackedStringArray("audio_stream_player", "lfo")]
+script = ExtResource("1_5q2f4")
+audio_stream_player = NodePath("../AudioStreamPlayer")
+lfo = NodePath("LFO")
+bus_name = "PitchShift"
+
+[node name="LFO" type="Node" parent="PitchShiftTriangle"]
+script = ExtResource("2_dhuae")
+bus_name = "PitchEffect"
+bus_effect_setter = "set_pitch_scale"
+waveform = 2
+bus_effect_baseline = 1.0
+amplitude = 1.0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("1_xnclm")
+bus = &"Gainer"

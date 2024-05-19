@@ -1,0 +1,36 @@
+[gd_resource type="AudioBusLayout" load_steps=4 format=3 uid="uid://di72m54hvvoog"]
+
+[sub_resource type="AudioEffectLowPassFilter" id="AudioEffectLowPassFilter_yfdmm"]
+resource_name = "LowPassFilter"
+
+[sub_resource type="AudioEffectAmplify" id="AudioEffectAmplify_21le5"]
+resource_name = "Amplify"
+
+[sub_resource type="AudioEffectPitchShift" id="AudioEffectPitchShift_ccxwp"]
+resource_name = "PitchShift"
+
+[resource]
+bus/1/name = &"LowPass"
+bus/1/solo = false
+bus/1/mute = false
+bus/1/bypass_fx = false
+bus/1/volume_db = 0.0
+bus/1/send = &"Master"
+bus/1/effect/0/effect = SubResource("AudioEffectLowPassFilter_yfdmm")
+bus/1/effect/0/enabled = true
+bus/2/name = &"Gainer"
+bus/2/solo = false
+bus/2/mute = false
+bus/2/bypass_fx = false
+bus/2/volume_db = 0.0
+bus/2/send = &"Master"
+bus/2/effect/0/effect = SubResource("AudioEffectAmplify_21le5")
+bus/2/effect/0/enabled = true
+bus/3/name = &"PitchShift"
+bus/3/solo = false
+bus/3/mute = false
+bus/3/bypass_fx = false
+bus/3/volume_db = 0.0
+bus/3/send = &"Master"
+bus/3/effect/0/effect = SubResource("AudioEffectPitchShift_ccxwp")
+bus/3/effect/0/enabled = true
