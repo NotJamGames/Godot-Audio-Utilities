@@ -6,7 +6,9 @@ LFO For Godot is a simple class for Godot 4.X that allows the user to manipulate
 
 Use it for subtle tremolo or dramatic filter sweeps or anything else you can think of!
 
-All parameters can be freely adjusted whilst the LFO is running, allowing for fun effects - tweening the rate or amplitude of the LFO is highly recommended. 
+All parameters can be freely adjusted whilst the LFO is running, allowing for fun effects - tweening the rate or amplitude of the LFO is highly recommended.
+
+A full demo project is included, allowing the user to easily try LFOs affecting a variety of parameters. Find out how it works [here](#lfo-demo-project).
 
 Please feel free to suggest improvements, changes or additional features. LFO For Godot is under CC0 Licence terms and can be freely used in any commercial or non-commercial projects and modified however the user sees fit.
 
@@ -37,7 +39,7 @@ For instance, to route the LFO to the cutoff parameter of an AudioEffectFilter, 
 
 ____
 
-- **Waveform:** the waveform used by the LFO. Includes options for Sawtooth, Square, Triangle and Sine
+- **Waveform:** the waveform used by the LFO. Includes options for Sawtooth, Inverted Sawtooth, Square, Triangle and Sine
 - **Rate:** the rate of the LFO, in Hz. Must be set to a float > .0
 - **Bus Effect Baseline:** the initial value for the effect parameter.
 - **Amplitude:**: the strength of the LFO's effect: the effect parameter will be modulated by up to this value, both above and below the baseline value.
@@ -59,3 +61,18 @@ ________
 ### Limitations 
 
 LFO For Godot is unfortunately not configured to work well at audio rates.
+
+
+## LFO Demo Project
+
+To get started, download all files and open the project within the Godot Editor (4.X only).
+
+Navigate to the SceneTree at the top left corner, and select any DemoPlayer node. 
+
+![image](https://github.com/NotJamGames/Godot-Audio-Utilities/assets/77352023/71cd57a5-28ac-40de-aa20-6e6a82039665)
+
+Next, via the inspector panel, simply click "Play Demo" to hear the LFO in action!
+
+![image](https://github.com/NotJamGames/Godot-Audio-Utilities/assets/77352023/b2971690-a3d0-4bcc-bb70-c9aa8705f835)
+
+Some of the LFOs (denoted by the term "Accelerating") demonstrate the use of tweens to affect LFO parameters - feel free to browse through the code to see one way to implement this
