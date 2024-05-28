@@ -66,12 +66,16 @@ var time : float = .0
 ## If true, the LFO will be reset to it's baseline position whenever
 ## cycling is set to true, either via start() or via set_cycling()
 @export var retrig_on_start : bool = false
+@export_range(.0, 1.0) var phase : float = .0
 
 
 func _ready() -> void:
 	if Engine.is_editor_hint():
 		set_cycling(false)
 		return
+
+	time = cycle_duration * phase
+
 	if autostart: start()
 
 
@@ -94,7 +98,7 @@ func set_cycling(new_state : bool) -> void:
 
 	if !verify_paths(): return
 
-	if retrig_on_start: time = .0
+	if retrig_on_start: time = cycle_duration * phase
 	cycling = new_state
 
 
