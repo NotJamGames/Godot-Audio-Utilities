@@ -56,6 +56,7 @@ var time : float = .0
 @export var amplitude : float : set = set_amplitude
 
 
+@export_category("Trigger Parameters")
 ## The position within the waveform from which the LFO should start.
 ## Please note this will only affect the LFO node when the _ready() function
 ## is initially called, or if retrig_on_start is set to true
@@ -63,6 +64,19 @@ var time : float = .0
 ## If true, the LFO will be reset to it's baseline position whenever
 ## cycling is set to true, either via start() or via set_cycling()
 @export var retrig_on_start : bool = false
+
+
+var fade_time : float = .0
+var fade_strength : float = 1.0
+## If true, the LFO's effect will be faded in/out on retrig based upon the
+## user's parameters
+@export var fade_enabled : bool = false : set = set_fade_enabled
+## The duration of the fade
+@export var fade_duration : float
+enum FADE_DIRECTIONS {FADE_IN, FADE_OUT}
+# The direction of fade, either fading in from 0 to full strength or out 
+# from full strength to 0
+@export var fade_direction : FADE_DIRECTIONS = FADE_DIRECTIONS.FADE_IN
 
 
 @export_category("Init Parameters")
@@ -91,14 +105,17 @@ func _process(delta : float) -> void:
 	if time > cycle_duration:
 		time = fmod(time, cycle_duration)
 
+	if fade_enabled: update_fade(delta)
+
 	var new_lfo_amplitude : float = \
-			(curr_wave_func.call() - .5) * amplitude * 2.0
+			(curr_wave_func.call() - .5) * amplitude * 2.0 * fade_strength
 	AudioServer.get_bus_effect(bus_index, bus_effect_index).call\
 			(bus_effect_setter, bus_effect_baseline + new_lfo_amplitude)
 
 
 func set_cycling(new_state : bool) -> void:
 	if new_state == false:
+		fade_time = .0
 		cycling = new_state
 		return
 
@@ -108,15 +125,22 @@ func set_cycling(new_state : bool) -> void:
 	cycling = new_state
 
 
+func update_fade(delta : float) -> void:
+	fade_time = min(fade_time + delta, fade_duration)
+	fade_strength = fade_time / fade_duration
+	if fade_direction == FADE_DIRECTIONS.FADE_OUT:
+		fade_strength = 1.0 - fade_strength
+
+
 func start() -> void:
 	if !verify_paths(): return
 
 	if retrig_on_start: time = .0
-	cycling = true
+	set_cycling(true)
 
 
 func stop() -> void:
-	cycling = false
+	set_cycling(false)
 
 
 func verify_paths() -> bool:
@@ -162,6 +186,11 @@ func set_amplitude(new_amplitude : float) -> void:
 		return
 
 	amplitude = new_amplitude
+
+
+func set_fade_enabled(new_state : bool) -> void:
+	fade_enabled = new_state
+	if !fade_enabled: fade_strength = 1.0
 
 
 func calculate_saw() -> float:
