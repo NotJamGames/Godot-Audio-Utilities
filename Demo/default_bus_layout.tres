@@ -2,12 +2,14 @@
 
 [sub_resource type="AudioEffectLowPassFilter" id="AudioEffectLowPassFilter_0ixec"]
 resource_name = "LowPassFilter"
+cutoff_hz = 5000.0
 
 [sub_resource type="AudioEffectAmplify" id="AudioEffectAmplify_23lp2"]
 resource_name = "Amplify"
 
 [sub_resource type="AudioEffectPitchShift" id="AudioEffectPitchShift_ccxwp"]
 resource_name = "PitchShift"
+pitch_scale = 0.975111
 
 [resource]
 bus/1/name = &"LowPass"

@@ -90,6 +90,23 @@ waveform = 3
 bus_effect_baseline = 1.0
 amplitude = 0.5
 
+[node name="FadeInTremolo" type="Node" parent="." node_paths=PackedStringArray("audio_stream_player", "lfo")]
+script = ExtResource("1_5q2f4")
+audio_stream_player = NodePath("../AudioStreamPlayer")
+lfo = NodePath("LFO")
+bus_name = "Gainer"
+
+[node name="LFO" type="Node" parent="FadeInTremolo"]
+script = ExtResource("2_dhuae")
+bus_name = "Gainer"
+bus_effect_setter = "set_volume_db"
+waveform = 3
+rate = 6.0
+amplitude = 20.0
+retrig_on_start = true
+fade_enabled = true
+fade_duration = 2.0
+
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("1_xnclm")
-bus = &"LowPass"
+bus = &"Gainer"

@@ -50,9 +50,19 @@ For instance, if the LFO is assigned to the cutoff parameter of an AudioEffectFi
 
 ____
 
+
+- **Phase:** The position within the waveform from which the LFO should start.
+*Please note this will only affect the LFO node when the _ready() function is initially called, or if retrig_on_start is set to true
+- **Retrig On Start:** if true, the LFO will restart from the beginning of the waveform when cycling is toggled. If false, it will instead recommence from the last known position in the waveform.
+- **Fade Enabled:** if true, the LFO's effect will be faded in/out on retrig based upon the user's parameters
+- **Fade Duration:** the duration of the fade
+- **Fade Direction:** # the direction of fade, either fading in from 0 to full strength or out from full strength to 0
+
+____
+
+
 - **Cycling:** if true, the LFO will cycle. This can be toggled within the editor to hear the effect of the LFO, provided an AudioStreamPlayer routed to the targeted AudioBus is playing.
 - **Autostart:** if true, the LFO will automatically start when the LFO's ready() function is called. Has no effect in Editor.
-- **Retrig On Start:** if true, the LFO will restart from the beginning of the waveform when cycling is toggled. If false, it will instead recommence from the last known position in the waveform.
 
 *Please note that the LFO will throw an error message if the user attempts to start a cycle whilst Bus Name, Bus Effect Index or Bus Effect Setter are configured incorrectly. Check for typos!*
 ________
