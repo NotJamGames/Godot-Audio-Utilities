@@ -56,6 +56,15 @@ var time : float = .0
 @export var amplitude : float : set = set_amplitude
 
 
+## The position within the waveform from which the LFO should start.
+## Please note this will only affect the LFO node when the _ready() function
+## is initially called, or if retrig_on_start is set to true
+@export_range(.0, 1.0) var phase : float = .0
+## If true, the LFO will be reset to it's baseline position whenever
+## cycling is set to true, either via start() or via set_cycling()
+@export var retrig_on_start : bool = false
+
+
 @export_category("Init Parameters")
 ## If true, the LFO is cycling.
 @export var cycling : bool = false : set = set_cycling
@@ -63,10 +72,7 @@ var time : float = .0
 ## [br][br]
 ## Please note this has no effect when running in editor.
 @export var autostart : bool = false
-## If true, the LFO will be reset to it's baseline position whenever
-## cycling is set to true, either via start() or via set_cycling()
-@export var retrig_on_start : bool = false
-@export_range(.0, 1.0) var phase : float = .0
+
 
 
 func _ready() -> void:
