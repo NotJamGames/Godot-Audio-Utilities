@@ -15,7 +15,7 @@ func _ready() -> void:
 
 
 func set_previous_demo_player(demo_player : DemoPlayer) -> void:
-	if previous_demo_player != null:
+	if previous_demo_player != null and previous_demo_player != demo_player:
 		previous_demo_player.set_play_demo(false)
 
 	previous_demo_player = demo_player
